@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aroma Bumbu — Eatery &amp; Café</title>
+<meta name="description" content="Aroma Bumbu Eatery & Café — Main Course, Snack, Dessert, Coffee, Fresh Juice, dan Milkshake. Pesan langsung via WhatsApp." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================
+   WARUNG HOJO — Design tokens
+   ========================================================== */
+:root {
+  --navy: #10231F;       /* dark green (primary) */
+  --navy-deep: #080A09;  /* near-black */
+  --orange: #F2A536;     /* gold/orange accent */
+  --orange-deep: #d68d1f;
+  --cream: #F7F3E8;      /* cream background */
+  --brown: #1B332D;      /* secondary green */
+  --white: #ffffff;
+  --ink: #1c2420;
+  --ink-soft: #5c645d;
+  --line: rgba(16, 35, 31, 0.12);
+
+  --shadow-card: 0 10px 24px rgba(8, 10, 9, 0.12);
+  --shadow-pop: 0 18px 40px rgba(8, 10, 9, 0.22);
+
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --font-display: "Poppins", "Segoe UI", sans-serif; /* Heading / nama menu */
+  --font-body: "Poppins", "Segoe UI", sans-serif;     /* Deskripsi menu */
+  --font-price: "Poppins", "Segoe UI", sans-serif;    /* Harga */
+  --font-nav: "Poppins", "Segoe UI", sans-serif;       /* Navigasi */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600; /* SemiBold */
+  margin: 0;
+  line-height: 1.12;
+  color: var(--navy);
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 76px 0;
+}
+
+.section-cream { background: var(--cream); }
+.section-white { background: var(--white); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--orange-deep);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+
+.section-head {
+  max-width: 620px;
+  margin-bottom: 36px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  margin-top: 6px;
+}
+
+.section-head p {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+  box-shadow: 0 10px 22px rgba(243, 108, 33, 0.35);
+}
+
+.btn-primary:hover { background: var(--orange-deep); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--navy);
+}
+
+.btn-outline:hover { background: var(--navy); color: var(--white); }
+
+.btn-whatsapp {
+  background: #25d366;
+  color: var(--white);
+  box-shadow: 0 10px 22px rgba(37, 211, 102, 0.35);
+}
+.btn-whatsapp:hover { background: #1fb955; }
+
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+
+/* ==========================================================
+   NAVBAR
+   ========================================================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(255, 248, 237, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  gap: 18px;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-lockup img { height: 40px; width: auto; }
+.brand-divider { width: 1px; height: 30px; background: var(--line); }
+
+.brand-names { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-names .b1 { font-family: var(--font-display); font-size: 1.05rem; color: var(--navy); font-weight: 700; }
+.brand-names .b2 { font-size: 0.68rem; color: var(--ink-soft); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-family: var(--font-nav);
+  font-weight: 500; /* Medium */
+  color: var(--navy);
+  font-size: 0.96rem;
+  position: relative;
+  padding: 6px 2px;
+}
+
+.nav-links a:hover { color: var(--orange); }
+
+.nav-cta { display: flex; align-items: center; gap: 14px; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  padding: 6px;
+}
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--navy);
+  margin: 5px 0;
+  border-radius: 2px;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0 18px;
+  border-top: 1px solid var(--line);
+}
+.mobile-menu a {
+  font-family: var(--font-nav);
+  padding: 12px 4px;
+  font-weight: 500; /* Medium */
+  color: var(--navy);
+  border-bottom: 1px solid var(--line);
+}
+.mobile-menu.open { display: flex; }
+
+/* ==========================================================
+   STATUS PILL (buka/tutup)
+   ========================================================== */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.status-pill.open { background: rgba(37, 211, 102, 0.14); color: #178a45; }
+.status-pill.closed { background: rgba(220, 60, 60, 0.12); color: #c23b3b; }
+.status-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero {
+  padding: 56px 0 70px;
+  background: linear-gradient(180deg, #fff8ed 0%, #fdeedd 100%);
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.hero-hj-logo { height: 54px; width: auto; margin-bottom: 18px; }
+
+.hero h1 {
+  font-size: clamp(2.6rem, 5.4vw, 4rem);
+  color: var(--navy);
+}
+.hero h1 .accent { color: var(--orange); }
+
+.hero-tagline {
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 16px 0 0;
+  max-width: 440px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 30px;
+}
+
+.hero-meta .chip {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  box-shadow: var(--shadow-card);
+}
+
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.hero-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hero-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+}
+
+.hero-gallery .tall { grid-row: span 2; aspect-ratio: 3 / 4.4; }
+.hero-gallery .short { aspect-ratio: 4 / 3; }
+
+/* ==========================================================
+   BEST SELLER STRIP
+   ========================================================== */
+.bestseller-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+}
+.bestseller-track::-webkit-scrollbar { height: 6px; }
+.bestseller-track::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
+
+.bs-card {
+  flex: 0 0 210px;
+  scroll-snap-align: start;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.bs-card:hover { transform: translateY(-4px); }
+.bs-card .bs-img { aspect-ratio: 1/1; overflow: hidden; }
+.bs-card .bs-img img { width: 100%; height: 100%; object-fit: cover; }
+.bs-card .bs-body { padding: 12px 14px 16px; }
+.bs-card .bs-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+.bs-card .bs-price { color: var(--orange-deep); font-weight: 800; font-size: 1.05rem; margin-top: 4px; }
+.bs-badge {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+  margin-bottom: 6px;
+}
+
+/* ==========================================================
+   MENU / CATEGORY TABS
+   ========================================================== */
+.category-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.category-tab {
+  background: var(--white);
+  border: 2px solid var(--line);
+  padding: 11px 22px;
+  border-radius: 100px;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.94rem;
+  transition: all 0.15s ease;
+}
+
+.category-tab.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.category-tab:not(.active):hover { border-color: var(--navy); }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.product-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-pop); }
+
+.product-photo {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: #f1ece0;
+}
+.product-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.product-body { padding: 14px 16px 16px; }
+
+.product-name {
+  font-family: var(--font-display);
+  font-weight: 600; /* SemiBold */
+  color: var(--navy);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+  min-height: 2.4em;
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-badge {
+  font-family: var(--font-price);
+  background: var(--orange);
+  color: var(--white);
+  font-weight: 700; /* Bold */
+  font-size: 1.08rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.add-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.add-btn:hover { background: var(--orange); }
+.add-btn:active { transform: scale(0.92); }
+
+.unavailable-tag {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--ink-soft);
+  z-index: 2;
+}
+
+/* ==========================================================
+   MODAL (product detail + checkout share base styles)
+   ========================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 20, 45, 0.55);
+  z-index: 100;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-sheet {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 26px 26px 0 0;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: slideUp 0.25s ease;
+}
+
+@media (min-width: 640px) {
+  .modal-overlay { align-items: center; padding: 24px; }
+  .modal-sheet { border-radius: var(--radius-lg); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--navy);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: var(--shadow-card);
+}
+
+.modal-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.modal-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.modal-content { padding: 22px 22px 26px; }
+.modal-content h3 { font-size: 1.4rem; color: var(--navy); }
+.modal-desc { font-family: var(--font-body); font-weight: 400; color: var(--ink-soft); margin: 10px 0 18px; line-height: 1.6; font-size: 0.95rem; }
+
+.modal-price {
+  font-family: var(--font-price);
+  color: var(--orange-deep);
+  font-weight: 700; /* Bold */
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--cream);
+  border-radius: 100px;
+  padding: 8px 10px;
+  width: fit-content;
+  margin-bottom: 22px;
+}
+.qty-control button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qty-control span { font-weight: 800; font-size: 1.1rem; min-width: 20px; text-align: center; }
+
+/* ==========================================================
+   CART DRAWER + FLOATING BUTTON
+   ========================================================== */
+.cart-fab {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 90;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 100px;
+  padding: 14px 22px 14px 18px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-pop);
+  font-weight: 700;
+}
+.cart-fab.show { display: inline-flex; }
+.cart-fab .cart-icon { font-size: 1.3rem; }
+.cart-fab .cart-count { font-size: 0.78rem; opacity: 0.85; font-weight: 600; }
+.cart-fab .cart-total { font-size: 1.02rem; }
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 20, 45, 0.55);
+  z-index: 110;
+  display: none;
+}
+.drawer-overlay.open { display: block; }
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: var(--white);
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.28s ease;
+}
+.cart-drawer.open { right: 0; }
+
+.drawer-header {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.drawer-header h3 { font-size: 1.2rem; }
+
+.drawer-body { flex: 1; overflow-y: auto; padding: 12px 22px; }
+
+.cart-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cart-item img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+.cart-item-price { font-family: var(--font-price); color: var(--orange-deep); font-weight: 700; margin: 4px 0 8px; }
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cart-item-qty button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--navy);
+  font-weight: 800;
+  border: 1px solid var(--line);
+}
+.cart-item-remove {
+  align-self: flex-start;
+  color: #c23b3b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: none;
+  padding: 4px;
+}
+
+.empty-cart { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
+.empty-cart .big-icon { font-size: 2.6rem; margin-bottom: 12px; }
+
+.drawer-footer {
+  padding: 18px 22px 22px;
+  border-top: 1px solid var(--line);
+}
+.subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+.subtotal-row .amt { font-family: var(--font-price); color: var(--orange-deep); font-size: 1.3rem; font-weight: 700; }
+
+/* ==========================================================
+   CHECKOUT
+   ========================================================== */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--cream);
+  color: var(--ink);
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.field-error { color: #c23b3b; font-size: 0.8rem; margin-top: 5px; display: none; }
+.field-error.show { display: block; }
+
+.order-summary {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 20px 0;
+}
+.order-summary h4 { font-size: 0.95rem; margin-bottom: 10px; }
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 5px 0;
+  color: var(--ink-soft);
+}
+.order-total {
+  font-family: var(--font-price);
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: var(--navy);
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+  padding-top: 10px;
+  font-size: 1.05rem;
+}
+
+.qris-note {
+  background: rgba(243, 108, 33, 0.1);
+  border: 1px dashed var(--orange);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  color: var(--brown);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   ABOUT
+   ========================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.about-photo { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-pop); }
+.about-photo img { width: 100%; aspect-ratio: 4/3.4; object-fit: cover; }
+
+.about-copy p { color: var(--ink-soft); line-height: 1.7; font-size: 1.02rem; margin-bottom: 20px; }
+
+.about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+.fact-card {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-card);
+}
+.fact-card .label { font-size: 0.78rem; color: var(--ink-soft); font-weight: 600; }
+.fact-card .value { font-family: var(--font-display); font-size: 1.15rem; color: var(--navy); margin-top: 4px; }
+
+/* ==========================================================
+   ORDER FLOW STEPS
+   ========================================================== */
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.flow-step {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+.flow-step .flow-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.flow-step .flow-title { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 4px; }
+.flow-step .flow-desc { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; }
+
+/* ==========================================================
+   LOCATION + SOCIAL
+   ========================================================== */
+.location-social-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+}
+
+.location-card, .social-card-wrap {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.location-pins { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 22px; }
+.location-pins .pin { font-weight: 600; color: var(--navy); }
+
+.social-cards { display: flex; flex-direction: column; gap: 12px; }
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--line);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.social-card:hover { border-color: var(--orange); transform: translateX(3px); }
+.social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  color: var(--white);
+}
+.social-icon.ig { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+.social-icon.tiktok { background: #010101; }
+.social-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+.social-handle { font-size: 0.8rem; color: var(--ink-soft); }
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.footer {
+  background: var(--navy-deep);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 56px 0 26px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.footer h4 {
+  color: var(--white);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.footer-brand img { height: 34px; }
+.footer-brand .fb-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--white); }
+.footer p { font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px; }
+.footer-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 0.9rem; }
+.footer-links a:hover { color: var(--orange); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 22px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================
+   TOAST
+   ========================================================== */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy);
+  color: var(--white);
+  padding: 13px 22px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-pop);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-gallery { order: -1; max-width: 480px; margin: 0 auto; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-photo { order: -1; }
+  .location-social-grid { grid-template-columns: 1fr; }
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .flow-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-cta .btn-outline-hide { display: none; }
+  .section { padding: 52px 0; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .flow-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .hero { padding: 34px 0 50px; }
+  .hero-gallery { grid-template-columns: 1fr 1fr; }
+  .cart-fab { right: 16px; bottom: 16px; padding: 12px 18px 12px 14px; }
+  .price-badge { font-size: 0.98rem; padding: 5px 10px; }
+  .add-btn { width: 36px; height: 36px; font-size: 1.25rem; }
+}
+
+@media (max-width: 420px) {
+  .product-grid { gap: 12px; }
+  .container { padding: 0 16px; }
+}
+
+/* ==========================================================
+   AROMA BUMBU — ADDITIONAL STYLES
+   ========================================================== */
+
+/* Search bar */
+.menu-search-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.menu-search {
+  width: 100%;
+  max-width: 480px;
+  padding: 14px 20px;
+  border-radius: 100px;
+  border: 2px solid var(--line);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 0.96rem;
+  color: var(--ink);
+}
+.menu-search:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+
+/* Category tabs: Food / Beverage / Menu Promo */
+.cat-tab-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.cat-tab {
+  background: var(--white);
+  border: 2px solid var(--line);
+  padding: 13px 28px;
+  border-radius: 100px;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1rem;
+  transition: all 0.15s ease;
+}
+.cat-tab.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.cat-tab:not(.active):hover { border-color: var(--orange); }
+
+/* Menu groups */
+.menu-group { margin-bottom: 40px; }
+.menu-group-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--orange-deep);
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+}
+
+.menu-empty-state {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ink-soft);
+}
+.menu-empty-state .big-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; }
+
+/* Product photo (upload-enabled) */
+.product-photo-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--cream);
+  overflow: hidden;
+}
+.product-photo-wrap .product-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eee7d6, #f7f3e8);
+}
+.product-photo-placeholder .placeholder-icon {
+  font-size: 2.6rem;
+  opacity: 0.35;
+}
+
+.photo-upload-btn {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(8, 10, 9, 0.72);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+.photo-upload-btn:hover { background: var(--navy); }
+
+.product-no {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.promo-desc { font-family: var(--font-body); font-weight: 400; color: var(--ink-soft); font-size: 0.88rem; margin: 0 0 10px; line-height: 1.5; }
+
+.promo-empty {
+  text-align: center;
+  padding: 70px 20px;
+  color: var(--ink-soft);
+}
+.promo-empty .big-icon { font-size: 2.8rem; display: block; margin-bottom: 12px; }
+.promo-empty h3 { color: var(--navy); margin-bottom: 8px; font-family: var(--font-display); }
+.promo-empty p { max-width: 420px; margin: 0 auto; line-height: 1.6; }
+
+.cart-item-photo-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+/* Responsive: category tabs + search */
+@media (max-width: 720px) {
+  .cat-tab { padding: 11px 20px; font-size: 0.9rem; }
+  .menu-group-title { font-size: 1.1rem; }
+}
+
+/* ==========================================================
+   TAMBAH MENU / TAMBAH PROMO — additional styles
+   ========================================================== */
+.add-menu-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.add-menu-bar .btn {
+  border-style: dashed;
+}
+
+.badge-featured {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 100px;
+  z-index: 2;
+}
+.badge-custom {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.66rem;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 100px;
+  z-index: 2;
+}
+/* If both badges present, stack custom badge below featured on right side is fine since featured is left */
+
+.card-delete-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(194, 59, 59, 0.9);
+  color: var(--white);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.card-delete-btn:hover { background: #a12f2f; }
+
+.photo-form-group { text-align: center; }
+.photo-upload-zone {
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-height: 160px;
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  border: 2px dashed var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.photo-upload-zone .placeholder-icon { font-size: 2.2rem; opacity: 0.4; }
+.photo-upload-zone img { width: 100%; height: 100%; object-fit: cover; }
+.photo-upload-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   EDITOR LOGIN — banner & toggle button
+   ========================================================== */
+.editor-banner {
+  background: var(--orange);
+  color: var(--navy-deep);
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 16px;
+}
+
+#editorToggleBtn, #editorToggleBtnMobile {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+}
+#editorToggleBtn.is-logged-in, #editorToggleBtnMobile.is-logged-in {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="container navbar-inner">
+    <div class="brand-lockup">
+      <div class="brand-names">
+        <span class="b1" style="font-size:1.3rem;">Aroma Bumbu</span>
+        <span class="b2">Eatery &amp; Café</span>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#order-flow">Order</a></li>
+        <li><a href="#location">Lokasi</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <span id="statusPill" class="status-pill"></span>
+      <button class="btn btn-outline btn-outline-hide" id="editorToggleBtn">🔐 Login Editor</button>
+      <a href="#menu" class="btn btn-primary btn-outline-hide">Pesan Sekarang</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#menu">Menu</a>
+    <a href="#order-flow">Order</a>
+    <a href="#location">Lokasi</a>
+    <a href="#menu" class="btn btn-primary" style="margin-top:10px;text-align:center;">Pesan Sekarang</a>
+    <button class="btn btn-outline" id="editorToggleBtnMobile" style="margin-top:10px;">🔐 Login Editor</button>
+  </div>
+</header>
+
+<div class="editor-banner" id="editorBanner" style="display:none;">
+  🔓 Mode Editor Aktif — kamu bisa tambah/hapus menu, tambah promo, dan ganti foto.
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <h1>Aroma <span class="accent">Bumbu</span></h1>
+      <p class="hero-tagline">Eatery &amp; Café — cita rasa bintang 4 aroma sajian luar biasa.</p>
+
+      <div class="hero-meta">
+        <span class="chip">📍 Howard Johnson Tangerang</span>
+        <span class="chip">🕙 Weekday 07.00–21.00</span>
+        <span class="chip">🕙 Weekend 07.00–22.00</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#menu" class="btn btn-primary">Lihat Menu</a>
+        <a href="#menu" class="btn btn-outline">Pesan Sekarang</a>
+      </div>
+    </div>
+
+    <div class="hero-gallery">
+      <div class="tall product-photo-placeholder" style="border-radius:var(--radius-lg); box-shadow:var(--shadow-pop);"><span class="placeholder-icon">🍽️</span></div>
+      <div class="short product-photo-placeholder" style="border-radius:var(--radius-lg); box-shadow:var(--shadow-pop);"><span class="placeholder-icon">☕</span></div>
+      <div class="short product-photo-placeholder" style="border-radius:var(--radius-lg); box-shadow:var(--shadow-pop);"><span class="placeholder-icon">🥤</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="section section-cream" id="menu">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Our Menu</span>
+      <h2>Pilih Menu Favoritmu</h2>
+      <p id="menuEditorHint" style="display:none;">Semua harga sudah tertera jelas. Tap tombol + untuk langsung menambahkan ke keranjang. Belum ada foto? Kamu bisa tambahkan sendiri lewat tombol 📷 di tiap kartu menu.</p>
+    </div>
+
+    <div class="menu-search-wrap">
+      <input type="text" id="menuSearch" class="menu-search" placeholder="Cari menu... (contoh: chicken, coffee, tea, juice)" />
+    </div>
+
+    <div class="cat-tab-wrap">
+      <button class="cat-tab active" data-category="Food">🍛 Food</button>
+      <button class="cat-tab" data-category="Beverage">🥤 Beverage</button>
+      <button class="cat-tab" data-category="Menu Promo">🎉 Menu Promo</button>
+    </div>
+
+    <div id="menuGridSection">
+      <div class="add-menu-bar" id="addMenuBar">
+        <button class="btn btn-outline" id="addMenuBtn"><span id="addMenuLabel">+ Tambah Menu</span></button>
+      </div>
+      <div class="menu-empty-state" id="menuEmptyState">
+        <span class="big-icon">🔍</span>
+        <p>Menu tidak ditemukan. Coba kata kunci lain.</p>
+      </div>
+      <div id="menuGrid"></div>
+    </div>
+
+    <div id="promoSection" style="display:none;">
+      <div id="promoContent"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ORDER FLOW ================= -->
+<section class="section section-white" id="order-flow">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Cara Pesan</span>
+      <h2>Order via WhatsApp</h2>
+      <p>Pesanan diproses langsung oleh admin melalui WhatsApp.</p>
+    </div>
+
+    <div class="flow-grid">
+      <div class="flow-step">
+        <div class="flow-icon">🍽️</div>
+        <div class="flow-title">Pilih Menu</div>
+        <div class="flow-desc">Tambahkan makanan &amp; minuman ke keranjang.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">🔢</div>
+        <div class="flow-title">Atur Jumlah</div>
+        <div class="flow-desc">Sesuaikan quantity tiap item di keranjang.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">🛒</div>
+        <div class="flow-title">Checkout</div>
+        <div class="flow-desc">Isi nama, nomor WhatsApp, dan catatan.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">💬</div>
+        <div class="flow-title">Kirim ke WhatsApp</div>
+        <div class="flow-desc">Pesanan otomatis terkirim ke Admin.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">✅</div>
+        <div class="flow-title">Konfirmasi</div>
+        <div class="flow-desc">Admin konfirmasi &amp; proses pesananmu.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:36px;">
+      <a id="contactWaBtn" href="https://wa.me/6282246397327" target="_blank" rel="noopener" class="btn btn-whatsapp">Hubungi WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOCATION + SOCIAL ================= -->
+<section class="section section-cream" id="location">
+  <div class="container location-social-grid">
+    <div class="location-card">
+      <span class="eyebrow">Kunjungi Kami</span>
+      <h3 style="margin:10px 0 16px; font-size:1.4rem;">Lokasi Aroma Bumbu</h3>
+      <div class="location-pins">
+        <div class="pin">📍 Howard Johnson Tangerang</div>
+        <div class="pin">🕙 Weekday: 07.00 – 21.00</div>
+        <div class="pin">🕙 Weekend: 07.00 – 22.00</div>
+      </div>
+      <a href="https://maps.app.goo.gl/aGVb2XjCTuuwvEPk8?g_st=ic" target="_blank" rel="noopener" class="btn btn-primary">Lihat Lokasi</a>
+    </div>
+
+    <div class="social-card-wrap">
+      <span class="eyebrow">Ikuti Kami</span>
+      <h3 style="margin:10px 0 16px; font-size:1.4rem;">Social Media</h3>
+      <div class="social-cards">
+        <a class="social-card" href="https://www.instagram.com/aromabumbueatery?stkn=MXd4b3pkbDlvd2dtdA==" target="_blank" rel="noopener">
+          <span class="social-icon ig">📷</span>
+          <span>
+            <span class="social-name" style="display:block;">Instagram</span>
+            <span class="social-handle">Aroma Bumbu Eatery</span>
+          </span>
+        </a>
+        <a class="social-card" href="https://www.instagram.com/howardjohnsontangerang?stkn=YTV2eWdrdjVwY3Yz" target="_blank" rel="noopener">
+          <span class="social-icon ig">📷</span>
+          <span>
+            <span class="social-name" style="display:block;">Instagram</span>
+            <span class="social-handle">Howard Johnson Tangerang</span>
+          </span>
+        </a>
+        <a class="social-card" href="https://www.tiktok.com/@aromabumbueaterycafe?_r=1&_t=ZS-99nXjvUp0o3" target="_blank" rel="noopener">
+          <span class="social-icon tiktok">🎵</span>
+          <span>
+            <span class="social-name" style="display:block;">TikTok</span>
+            <span class="social-handle">Aroma Bumbu Eatery</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <span class="fb-name">Aroma Bumbu</span>
+        </div>
+        <p><strong style="color:#fff;">Aroma Bumbu</strong><br/>Eatery &amp; Café</p>
+        <p>Howard Johnson Tangerang</p>
+        <p>Weekday: 07.00 – 21.00</p>
+        <p>Weekend: 07.00 – 22.00</p>
+      </div>
+      <div>
+        <h4>Tautan</h4>
+        <ul class="footer-links">
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#order-flow">Order</a></li>
+          <li><a href="#location">Lokasi</a></li>
+          <li><a href="https://maps.app.goo.gl/aGVb2XjCTuuwvEPk8?g_st=ic" target="_blank" rel="noopener">Google Maps</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hubungi Kami</h4>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/6282246397327" target="_blank" rel="noopener">WhatsApp: 082246397327</a></li>
+          <li><a href="https://www.instagram.com/aromabumbueatery?stkn=MXd4b3pkbDlvd2dtdA==" target="_blank" rel="noopener">Instagram Aroma Bumbu</a></li>
+          <li><a href="https://www.instagram.com/howardjohnsontangerang?stkn=YTV2eWdrdjVwY3Yz" target="_blank" rel="noopener">Instagram Howard Johnson</a></li>
+          <li><a href="https://www.tiktok.com/@aromabumbueaterycafe?_r=1&_t=ZS-99nXjvUp0o3" target="_blank" rel="noopener">TikTok Aroma Bumbu</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aroma Bumbu Eatery &amp; Café. All Rights Reserved.</span>
+      <span>Howard Johnson Tangerang</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= FLOATING CART BUTTON ================= -->
+<button class="cart-fab show" id="cartFab">
+  <span class="cart-icon">🛒</span>
+  <span>
+    <span class="cart-count" id="cartCount" style="display:none; background:var(--orange); color:#fff; border-radius:100px; font-size:0.72rem; padding:1px 7px; margin-left:4px;">0</span>
+  </span>
+</button>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="drawer-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" style="right:-420px;">
+  <div class="drawer-header">
+    <h3>Keranjang Anda</h3>
+    <button class="modal-close" style="position:static;" id="cartClose">✕</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-footer">
+    <div class="subtotal-row">
+      <span>Subtotal</span>
+      <span class="amt" id="cartSubtotal">Rp0</span>
+    </div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn" disabled>Checkout</button>
+  </div>
+</aside>
+
+<!-- ============================================================
+     FIREBASE — biar foto & menu tersimpan di server, bukan cuma
+     di browser sendiri, jadi otomatis tampil buat SEMUA pengunjung.
+     (Pakai Firestore aja, tanpa Storage — jadi nggak perlu upgrade
+     ke paket berbayar/Blaze. Foto disimpan langsung sebagai data
+     di dalam dokumen Firestore, makanya ukurannya dibatasi kecil.)
+     ============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ============================================================
+   GANTI bagian ini dengan config dari project Firebase kamu!
+   Firebase Console → Project settings → General → "Your apps"
+   → Web app → "SDK setup and configuration" → Config.
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDASO7SCzGEzHPYevCXjjtlvDA3g_cXpyw",
+  authDomain: "aroma-bumbu-4f0ca.firebaseapp.com",
+  projectId: "aroma-bumbu-4f0ca",
+  storageBucket: "aroma-bumbu-4f0ca.firebasestorage.app",
+  messagingSenderId: "314561519043",
+  appId: "1:314561519043:web:2e05c0ff1b6b394139f176",
+  measurementId: "G-QL3H1EQHF2",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const drawer = document.getElementById("cartDrawer");
+  const overlay = document.getElementById("cartOverlay");
+  const fab = document.getElementById("cartFab");
+  const closeBtn = document.getElementById("cartClose");
+  function openDrawer(){ overlay.classList.add("open"); drawer.style.right = "0"; }
+  function closeDrawer(){ overlay.classList.remove("open"); drawer.style.right = "-420px"; }
+  fab.addEventListener("click", openDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeDrawer(); });
+});
+</script>
+
+<!-- ================= CHECKOUT MODAL ================= -->
+<div class="modal-overlay" id="checkoutOverlay">
+  <div class="modal-sheet" id="checkoutModalSheet">
+    <button class="modal-close" id="checkoutClose">✕</button>
+    <div class="modal-content">
+      <h3>Checkout Pesanan</h3>
+      <div id="orderSummary" class="order-summary"></div>
+
+      <div class="qris-note">
+        💳 Pembayaran dapat dikonfirmasi langsung dengan admin melalui WhatsApp setelah pesanan diterima.
+      </div>
+
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label for="customerName">Nama Customer *</label>
+          <input type="text" id="customerName" placeholder="Nama kamu" required />
+          <div class="field-error" id="nameError">Nama wajib diisi</div>
+        </div>
+        <div class="form-group">
+          <label for="customerPhone">Nomor WhatsApp (opsional)</label>
+          <input type="tel" id="customerPhone" placeholder="08xxxxxxxxxx" />
+        </div>
+        <div class="form-group">
+          <label for="customerNotes">Catatan Pesanan (opsional)</label>
+          <textarea id="customerNotes" placeholder="Contoh: less sugar, tanpa es, dll."></textarea>
+        </div>
+        <button type="submit" class="btn btn-whatsapp btn-block">📲 Order via WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TAMBAH MENU MODAL ================= -->
+<div class="modal-overlay" id="addMenuOverlay">
+  <div class="modal-sheet" id="addMenuModalSheet">
+    <button class="modal-close" id="addMenuClose">✕</button>
+    <div class="modal-content">
+      <h3>Tambah Menu <span id="addMenuCategoryLabel"></span></h3>
+      <p class="modal-desc">Menu baru ini akan tersimpan di server dan langsung tampil untuk semua pengunjung.</p>
+
+      <form id="addMenuForm">
+        <div class="form-group photo-form-group">
+          <label>Foto (opsional)</label>
+          <div class="photo-upload-zone" id="addMenuPhotoPreview">
+            <span class="placeholder-icon">🍽️</span>
+          </div>
+          <label class="btn btn-outline btn-block photo-upload-label">
+            📷 Pilih Foto
+            <input type="file" id="addMenuPhotoInput" accept="image/*" hidden />
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="newMenuName">Nama Menu *</label>
+          <input type="text" id="newMenuName" placeholder="Contoh: Es Teh Manis" required />
+        </div>
+        <div class="form-group">
+          <label for="newMenuGroup">Kategori / Grup (opsional)</label>
+          <input type="text" id="newMenuGroup" placeholder="Contoh: Main Course, Snack, Fresh Juice, dll." />
+        </div>
+        <div class="form-group">
+          <label for="newMenuPrice">Harga (Rp) *</label>
+          <input type="number" id="newMenuPrice" placeholder="Contoh: 25000" min="0" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">💾 Simpan Menu</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TAMBAH PROMO MODAL ================= -->
+<div class="modal-overlay" id="addPromoOverlay">
+  <div class="modal-sheet" id="addPromoModalSheet">
+    <button class="modal-close" id="addPromoClose">✕</button>
+    <div class="modal-content">
+      <h3>Tambah Menu Promo</h3>
+      <p class="modal-desc">Promo baru akan tersimpan di server dan langsung tampil di tab Menu Promo untuk semua pengunjung.</p>
+
+      <form id="addPromoForm">
+        <div class="form-group photo-form-group">
+          <label>Foto (opsional)</label>
+          <div class="photo-upload-zone" id="addPromoPhotoPreview">
+            <span class="placeholder-icon">🎉</span>
+          </div>
+          <label class="btn btn-outline btn-block photo-upload-label">
+            📷 Pilih Foto
+            <input type="file" id="addPromoPhotoInput" accept="image/*" hidden />
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="newPromoTitle">Judul Promo *</label>
+          <input type="text" id="newPromoTitle" placeholder="Contoh: Paket Hemat Berdua" required />
+        </div>
+        <div class="form-group">
+          <label for="newPromoDesc">Deskripsi (opsional)</label>
+          <textarea id="newPromoDesc" placeholder="Contoh: 2 Rice Bowl + 2 Ice Tea"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="newPromoPrice">Harga Promo (Rp) *</label>
+          <input type="number" id="newPromoPrice" placeholder="Contoh: 90000" min="0" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">💾 Simpan Promo</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOGIN EDITOR MODAL ================= -->
+<div class="modal-overlay" id="editorLoginOverlay">
+  <div class="modal-sheet" id="editorLoginSheet">
+    <button class="modal-close" id="editorLoginClose">✕</button>
+    <div class="modal-content">
+      <h3>🔐 Login Editor</h3>
+      <p class="modal-desc">Khusus untuk admin/pengelola Aroma Bumbu — masuk untuk mengelola menu, promo, dan foto.</p>
+
+      <form id="editorLoginForm">
+        <div class="form-group">
+          <label for="editorUsername">Username</label>
+          <input type="text" id="editorUsername" placeholder="Username editor" required autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="editorPassword">Password</label>
+          <input type="password" id="editorPassword" placeholder="Password editor" required autocomplete="off" />
+        </div>
+        <div class="field-error" id="editorLoginError">Username atau password salah</div>
+        <button type="submit" class="btn btn-primary btn-block">Masuk sebagai Editor</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/**
+ * config.js — AROMA BUMBU Eatery & Café
+ */
+const CONFIG = {
+  BRAND_NAME: "Aroma Bumbu",
+  BRAND_TAGLINE: "Eatery & Café",
+  WHATSAPP_NUMBER: "6282246397327", // 082246397327 in international format
+  OPEN_HOUR_WEEKDAY: 7,
+  CLOSE_HOUR_WEEKDAY: 21,
+  OPEN_HOUR_WEEKEND: 7,
+  CLOSE_HOUR_WEEKEND: 22,
+  LOCATION_NAME: "Howard Johnson Tangerang",
+  GOOGLE_MAPS_URL: "https://maps.app.goo.gl/aGVb2XjCTuuwvEPk8?g_st=ic",
+  INSTAGRAM_AROMA: "https://www.instagram.com/aromabumbueatery?stkn=MXd4b3pkbDlvd2dtdA==",
+  INSTAGRAM_HJ: "https://www.instagram.com/howardjohnsontangerang?stkn=YTV2eWdrdjVwY3Yz",
+  TIKTOK_AROMA: "https://www.tiktok.com/@aromabumbueaterycafe?_r=1&_t=ZS-99nXjvUp0o3",
+
+  // AKUN EDITOR — untuk mengelola menu, promo, dan foto.
+  // Ganti username/password di sini kapan pun kamu mau.
+  // CATATAN: karena ini file statis (tanpa server), kredensial ini
+  // tetap terlihat oleh siapa pun yang membuka source code file ini.
+  EDITOR_ACCOUNT: {
+    username: "admin_aromabumbu",
+    password: "AromaBumbu@2026",
+  },
+};
+
+function formatRupiah(num) {
+  return "Rp" + num.toLocaleString("id-ID");
+}
+
+function isStoreOpen() {
+  const now = new Date();
+  const day = now.getDay(); // 0 = Minggu, 6 = Sabtu
+  const hour = now.getHours();
+  const isWeekend = day === 0 || day === 6;
+  const openHour = isWeekend ? CONFIG.OPEN_HOUR_WEEKEND : CONFIG.OPEN_HOUR_WEEKDAY;
+  const closeHour = isWeekend ? CONFIG.CLOSE_HOUR_WEEKEND : CONFIG.CLOSE_HOUR_WEEKDAY;
+  return hour >= openHour && hour < closeHour;
+}
+
+function getTodayHoursLabel() {
+  const day = new Date().getDay();
+  const isWeekend = day === 0 || day === 6;
+  return isWeekend ? "07.00–22.00" : "07.00–21.00";
+}
+
+</script>
+<script>
+/**
+ * data.js — AROMA BUMBU
+ * ------------------------------------------------------------------
+ * Sumber: Menu_AROMA_BUMBU.xlsx
+ * Untuk mengubah nama menu / harga / kategori / best seller,
+ * cukup edit array ini.
+ *
+ * imageUrl kosong ("") artinya belum ada foto — kartu menu akan
+ * menampilkan placeholder elegan + tombol "Tambah Foto" agar foto
+ * bisa diunggah langsung dari perangkat (tersimpan otomatis di
+ * browser ini lewat localStorage).
+ * ------------------------------------------------------------------
+ */
+
+const MENU_DATA = [
+  // ---------------- MAIN COURSE (FOOD) ----------------
+  { id: "menu-01", no: 1, name: "Rice Bowl Dory Buttermilk + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "", available: true, featured: true },
+  { id: "menu-02", no: 2, name: "Rice Bowl Dory Sambal Matah + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-02.jpg", available: true, featured: false },
+  { id: "menu-03", no: 3, name: "Rice Bowl Dory Lada Garam + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-03.jpg", available: true, featured: false },
+  { id: "menu-04", no: 4, name: "Rice Bowl Dory Asam Manis + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-04.jpg", available: true, featured: false },
+  { id: "menu-05", no: 5, name: "Rice Bowl Ayam Suir Sambal Merah + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-05.jpg", available: true, featured: false },
+  { id: "menu-06", no: 6, name: "Rice Bowl Ayam Suir Sambal Hijau + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-06.jpg", available: true, featured: false },
+  { id: "menu-07", no: 7, name: "Rice Bowl Ayam Suir Sambal Matah + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-07.jpg", available: true, featured: true },
+  { id: "menu-08", no: 8, name: "Rice Bowl Ayam Suir Salt & Pepper + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "", available: true, featured: false },
+  { id: "menu-09", no: 9, name: "Nasi Goreng Kampung + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "images/menu-09.jpg", available: true, featured: true },
+  { id: "menu-10", no: 10, name: "Mie Goreng Kampung + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "", available: true, featured: false },
+  { id: "menu-11", no: 11, name: "Garlic Chicken Wing + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 40000, imageUrl: "", available: true, featured: false },
+  { id: "menu-12", no: 12, name: "Vegetable Capcay + Ice Tea or Mineral Water", category: "Food", group: "Main Course", price: 50000, imageUrl: "", available: true, featured: false },
+
+  // ---------------- SNACK (FOOD) ----------------
+  { id: "menu-13", no: 13, name: "French Fries + Ice Tea or Mineral Water", category: "Food", group: "Snack", price: 45000, imageUrl: "images/menu-13.jpg", available: true, featured: false },
+  { id: "menu-14", no: 14, name: "Singkong Keju + Ice Tea or Mineral Water", category: "Food", group: "Snack", price: 45000, imageUrl: "", available: true, featured: false },
+  { id: "menu-15", no: 15, name: "Tahu Isi Sayuran + Ice Tea or Mineral Water", category: "Food", group: "Snack", price: 45000, imageUrl: "", available: true, featured: false },
+
+  // ---------------- DESSERT (FOOD) ----------------
+  { id: "menu-16", no: 16, name: "Pisang Goreng Keju + Ice Tea or Mineral Water", category: "Food", group: "Dessert", price: 45000, imageUrl: "", available: true, featured: false },
+  { id: "menu-17", no: 17, name: "Roti Bakar Keju + Ice Tea or Mineral Water", category: "Food", group: "Dessert", price: 45000, imageUrl: "", available: true, featured: false },
+
+  // ---------------- HOT / ICED TEA & COFFEE (BEVERAGE) ----------------
+  { id: "menu-18", no: 18, name: "Lemon Tea", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 25000, imageUrl: "images/menu-18.jpg", available: true, featured: false },
+  { id: "menu-19", no: 19, name: "Tea Telang", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 25000, imageUrl: "images/menu-19.jpg", available: true, featured: true },
+  { id: "menu-20", no: 20, name: "Long Black", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 25000, imageUrl: "images/menu-20.jpg", available: true, featured: false },
+  { id: "menu-21", no: 21, name: "Cappuccino or Latte", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 30000, imageUrl: "", available: true, featured: true },
+  { id: "menu-23", no: 23, name: "Caramel Latte", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 30000, imageUrl: "", available: true, featured: false },
+  { id: "menu-24", no: 24, name: "Hazelnut Latte", category: "Beverage", group: "Hot / Iced Tea & Coffee", price: 30000, imageUrl: "", available: true, featured: false },
+
+  // ---------------- FRESH JUICE (BEVERAGE) ----------------
+  { id: "menu-25", no: 25, name: "Strawberry Juice", category: "Beverage", group: "Fresh Juice", price: 25000, imageUrl: "", available: true, featured: false },
+  { id: "menu-26", no: 26, name: "Avocado Juice", category: "Beverage", group: "Fresh Juice", price: 25000, imageUrl: "", available: true, featured: true },
+  { id: "menu-27", no: 27, name: "Watermelon Juice", category: "Beverage", group: "Fresh Juice", price: 25000, imageUrl: "", available: true, featured: false },
+
+  // ---------------- MILKSHAKE (BEVERAGE) ----------------
+  { id: "menu-28", no: 28, name: "Strawberry Milkshake", category: "Beverage", group: "Milkshake", price: 25000, imageUrl: "images/menu-28.jpg", available: true, featured: false },
+  { id: "menu-29", no: 29, name: "Chocolate Milkshake", category: "Beverage", group: "Milkshake", price: 25000, imageUrl: "images/menu-29.jpg", available: true, featured: false },
+  { id: "menu-30", no: 30, name: "Vanilla Milkshake", category: "Beverage", group: "Milkshake", price: 25000, imageUrl: "images/menu-30.jpg", available: true, featured: false },
+];
+
+/**
+ * PROMO_DATA — struktur siap pakai untuk menu promo.
+ * Set promoActive: true dan isi datanya kapan pun ada promo resmi.
+ * Selama promoActive: false, section "Menu Promo" akan menampilkan
+ * pesan "belum ada promo" alih-alih data kosong/palsu.
+ */
+const PROMO_DATA = [
+  // Contoh struktur (nonaktif):
+  // {
+  //   id: "promo-01",
+  //   promoTitle: "Paket Hemat Berdua",
+  //   promoDescription: "2 Rice Bowl + 2 Ice Tea",
+  //   promoPrice: 90000,
+  //   promoImage: "",
+  //   promoActive: false,
+  // },
+];
+
+const CATEGORIES = ["Food", "Beverage", "Menu Promo"];
+
+</script>
+<script>
+/**
+ * menuService.js — AROMA BUMBU
+ * ------------------------------------------------------------------
+ * Menggabungkan MENU_DATA (statis, dari Excel) dengan:
+ *  - foto yang diunggah user sendiri per menu (koleksi "photos")
+ *  - menu tambahan baru yang dibuat lewat tombol "+ Tambah Menu"
+ *    (koleksi "customMenu")
+ *  - promo tambahan yang dibuat lewat tombol "+ Tambah Promo"
+ *    (koleksi "customPromo")
+ *
+ * Semuanya disimpan di Firebase (Firestore + Storage), disinkron
+ * real-time lewat onSnapshot() di initFirebaseSync(), jadi begitu
+ * admin ganti foto/menu, SEMUA pengunjung otomatis lihat perubahan
+ * tanpa perlu push ulang ke GitHub.
+ *
+ * Semua bagian lain (app.js, cart) HANYA boleh membaca lewat fungsi
+ * di file ini, bukan langsung ke MENU_DATA / PROMO_DATA.
+ * ------------------------------------------------------------------
+ */
+
+/* ============================================================
+   CACHE DI MEMORI — diisi otomatis & real-time oleh Firestore
+   lewat onSnapshot() di initFirebaseSync(). Semua fungsi baca
+   di bawah ini cukup baca dari cache ini (tetap sinkron/cepat),
+   sedangkan fungsi tulis (add/remove) langsung ke Firestore.
+   ============================================================ */
+let photoCache = {};       // { menuId: imageUrl }
+let customMenuCache = [];  // [{ id, name, category, group, price, imageUrl, ... }]
+let customPromoCache = []; // [{ id, promoTitle, promoDescription, promoPrice, promoImage, promoActive }]
+
+let onFirebaseDataChange = () => {};
+
+function initFirebaseSync(onChange) {
+  onFirebaseDataChange = onChange;
+
+  db.collection("photos").onSnapshot(
+    (snap) => {
+      const next = {};
+      snap.forEach((doc) => {
+        next[doc.id] = (doc.data() || {}).imageUrl || "";
+      });
+      photoCache = next;
+      onFirebaseDataChange();
+    },
+    (err) => {
+      console.error("Gagal sinkron foto menu:", err);
+      showToast("Gagal terhubung ke server foto. Cek koneksi/konfigurasi Firebase.");
+    }
+  );
+
+  db.collection("customMenu").onSnapshot(
+    (snap) => {
+      customMenuCache = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      onFirebaseDataChange();
+    },
+    (err) => console.error("Gagal sinkron menu tambahan:", err)
+  );
+
+  db.collection("customPromo").onSnapshot(
+    (snap) => {
+      customPromoCache = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      onFirebaseDataChange();
+    },
+    (err) => console.error("Gagal sinkron promo:", err)
+  );
+}
+
+/* ============================================================
+   FOTO → dikompres di browser lalu disimpan LANGSUNG di Firestore
+   (bukan Firebase Storage, biar nggak perlu upgrade ke Blaze).
+   Firestore membatasi 1 dokumen maksimal ~1MB, jadi tiap foto
+   di-resize & dikompres otomatis supaya selalu muat, apa pun
+   ukuran foto aslinya dari HP.
+   ============================================================ */
+const MAX_PHOTO_DOC_BYTES = 700 * 1024; // batas aman per foto (~700KB)
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => resolve(ev.target.result);
+    reader.onerror = () => reject(new Error("Gagal membaca file foto"));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function compressImageForFirestore(file) {
+  if (file.size > 15 * 1024 * 1024) {
+    throw new Error("Ukuran file terlalu besar (maks 15MB sebelum diproses)");
+  }
+
+  const rawDataUrl = await readFileAsDataUrl(file);
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("File bukan gambar yang valid"));
+    image.src = rawDataUrl;
+  });
+
+  const MAX_DIMENSION = 900;
+  let { width, height } = img;
+  if (width > height && width > MAX_DIMENSION) {
+    height = Math.round((height * MAX_DIMENSION) / width);
+    width = MAX_DIMENSION;
+  } else if (height > MAX_DIMENSION) {
+    width = Math.round((width * MAX_DIMENSION) / height);
+    height = MAX_DIMENSION;
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+  let quality = 0.82;
+  let outputDataUrl = canvas.toDataURL("image/jpeg", quality);
+  while (outputDataUrl.length > MAX_PHOTO_DOC_BYTES && quality > 0.35) {
+    quality -= 0.1;
+    outputDataUrl = canvas.toDataURL("image/jpeg", quality);
+  }
+
+  if (outputDataUrl.length > MAX_PHOTO_DOC_BYTES) {
+    throw new Error("Foto masih terlalu besar walau sudah dikompres, coba pakai foto lain");
+  }
+
+  return outputDataUrl;
+}
+
+function generateId(prefix) {
+  return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+}
+
+/* ============================================================
+   READ API — dipakai app.js
+   ============================================================ */
+function getAllMenu() {
+  const base = MENU_DATA.map((item) => ({
+    ...item,
+    imageUrl: photoCache[item.id] || item.imageUrl,
+    custom: false,
+  }));
+  const custom = customMenuCache.map((item) => ({
+    ...item,
+    custom: true,
+  }));
+  return [...base, ...custom];
+}
+
+function getMenuByCategory(category) {
+  const all = getAllMenu();
+  if (!category || category === "Semua") return all;
+  return all.filter((m) => m.category === category);
+}
+
+function getMenuById(id) {
+  return getAllMenu().find((m) => m.id === id);
+}
+
+function searchMenu(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return getAllMenu();
+  return getAllMenu().filter(
+    (m) =>
+      m.name.toLowerCase().includes(q) ||
+      m.group.toLowerCase().includes(q) ||
+      m.category.toLowerCase().includes(q)
+  );
+}
+
+function getFeaturedMenu() {
+  return getAllMenu().filter((m) => m.featured);
+}
+
+function getActivePromos() {
+  const base = (PROMO_DATA || []).filter((p) => p.promoActive).map((p) => ({ ...p, custom: false }));
+  const custom = customPromoCache
+    .filter((p) => p.promoActive)
+    .map((p) => ({ ...p, custom: true }));
+  return [...base, ...custom];
+}
+
+/* ============================================================
+   WRITE API — dipakai form "Tambah Menu" / "Tambah Promo"
+   Semua async: upload foto ke Storage dulu (kalau ada), baru
+   simpan datanya ke Firestore. Setelah tersimpan, onSnapshot di
+   initFirebaseSync() otomatis narik data terbaru & re-render —
+   berlaku untuk SEMUA pengunjung yang lagi buka halaman ini.
+   ============================================================ */
+async function addCustomMenu({ name, category, group, price, imageUrl }) {
+  const id = generateId("custom-menu");
+  const item = {
+    no: null,
+    name: name.trim(),
+    category, // "Food" atau "Beverage"
+    group: group && group.trim() ? group.trim() : "Menu Tambahan",
+    price: Number(price) || 0,
+    imageUrl: imageUrl || "",
+    available: true,
+    featured: false,
+  };
+  await db.collection("customMenu").doc(id).set(item);
+  return { id, ...item };
+}
+
+async function removeCustomMenu(id) {
+  await db.collection("customMenu").doc(id).delete();
+}
+
+async function addCustomPromo({ promoTitle, promoDescription, promoPrice, promoImage }) {
+  const id = generateId("custom-promo");
+  const promo = {
+    promoTitle: promoTitle.trim(),
+    promoDescription: (promoDescription || "").trim(),
+    promoPrice: Number(promoPrice) || 0,
+    promoImage: promoImage || "",
+    promoActive: true,
+  };
+  await db.collection("customPromo").doc(id).set(promo);
+  return { id, ...promo };
+}
+
+async function removeCustomPromo(id) {
+  await db.collection("customPromo").doc(id).delete();
+}
+
+</script>
+<script>
+/**
+ * cart.js
+ * ------------------------------------------------------------------
+ * Simple in-memory cart store with a pub/sub so the UI (app.js) can
+ * re-render whenever the cart changes, from wherever the change
+ * happened (product card, modal, or cart drawer).
+ * ------------------------------------------------------------------
+ */
+
+const cart = {
+  items: [], // { id, name, price, imageUrl, qty }
+  listeners: [],
+
+  subscribe(fn) {
+    this.listeners.push(fn);
+  },
+
+  _notify() {
+    this.listeners.forEach((fn) => fn(this.items));
+  },
+
+  add(product, qty = 1) {
+    const existing = this.items.find((i) => i.id === product.id);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      this.items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        qty,
+      });
+    }
+    this._notify();
+  },
+
+  updateQty(id, qty) {
+    const item = this.items.find((i) => i.id === id);
+    if (!item) return;
+    if (qty <= 0) {
+      this.remove(id);
+      return;
+    }
+    item.qty = qty;
+    this._notify();
+  },
+
+  increment(id) {
+    const item = this.items.find((i) => i.id === id);
+    if (item) this.updateQty(id, item.qty + 1);
+  },
+
+  decrement(id) {
+    const item = this.items.find((i) => i.id === id);
+    if (item) this.updateQty(id, item.qty - 1);
+  },
+
+  remove(id) {
+    this.items = this.items.filter((i) => i.id !== id);
+    this._notify();
+  },
+
+  clear() {
+    this.items = [];
+    this._notify();
+  },
+
+  totalItems() {
+    return this.items.reduce((sum, i) => sum + i.qty, 0);
+  },
+
+  totalPrice() {
+    return this.items.reduce((sum, i) => sum + i.qty * i.price, 0);
+  },
+};
+
+</script>
+<script>
+/**
+ * app.js — AROMA BUMBU
+ * ------------------------------------------------------------------
+ * Render menu, kategori, search, cart drawer, checkout, WhatsApp,
+ * upload foto per menu, dan fitur tambah menu/promo baru
+ * (semuanya tersimpan otomatis lewat localStorage).
+ * ------------------------------------------------------------------
+ */
+
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+let activeCategory = "Food";
+let searchQuery = "";
+const EDITOR_MODE_KEY = "aromaBumbuEditorMode_v1";
+
+function isEditorMode() {
+  return localStorage.getItem(EDITOR_MODE_KEY) === "true";
+}
+function setEditorMode(val) {
+  try {
+    localStorage.setItem(EDITOR_MODE_KEY, val ? "true" : "false");
+  } catch (e) {
+    console.warn("Gagal menyimpan status login editor.", e);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initNavbar();
+  initStatusPill();
+  initEditorAuth();
+  initCategoryTabs();
+  initSearch();
+  initCartUI();
+  initCheckout();
+  initAddMenuModal();
+  initAddPromoModal();
+  cart.subscribe(renderCartUI);
+  renderCartUI(cart.items);
+
+  // Render pertama kali pakai data lokal (foto default kosong dulu),
+  // lalu setiap ada perubahan di Firestore (dari device manapun),
+  // menu & promo otomatis di-render ulang untuk SEMUA pengunjung.
+  renderMenuGrid();
+  renderPromoSection();
+  initFirebaseSync(() => {
+    renderMenuGrid();
+    renderPromoSection();
+    renderCartUI(cart.items);
+  });
+});
+
+/* ============================================================
+   NAVBAR (mobile toggle)
+   ============================================================ */
+function initNavbar() {
+  const toggle = $("#navToggle");
+  const menu = $("#mobileMenu");
+  if (!toggle || !menu) return;
+  toggle.addEventListener("click", () => menu.classList.toggle("open"));
+  $$("#mobileMenu a").forEach((a) =>
+    a.addEventListener("click", () => menu.classList.remove("open"))
+  );
+}
+
+function initStatusPill() {
+  const pill = $("#statusPill");
+  if (!pill) return;
+  const open = isStoreOpen();
+  pill.classList.add(open ? "open" : "closed");
+  pill.innerHTML = `<span class="dot"></span> ${
+    open ? "Buka Sekarang" : "Sedang Tutup"
+  } · ${getTodayHoursLabel()}`;
+}
+
+/* ============================================================
+   LOGIN EDITOR — akses tambah/hapus menu, promo, foto
+   ============================================================ */
+function initEditorAuth() {
+  const toggleBtns = [$("#editorToggleBtn"), $("#editorToggleBtnMobile")].filter(Boolean);
+  const overlay = $("#editorLoginOverlay");
+  const closeBtn = $("#editorLoginClose");
+  const form = $("#editorLoginForm");
+  const errorMsg = $("#editorLoginError");
+
+  updateEditorToggleUI();
+
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (isEditorMode()) {
+        // Sedang login -> tombol ini jadi Logout
+        setEditorMode(false);
+        updateEditorToggleUI();
+        showToast("Berhasil logout dari Mode Editor");
+        renderMenuGrid();
+        renderPromoSection();
+      } else {
+        errorMsg.classList.remove("show");
+        form.reset();
+        overlay.classList.add("open");
+      }
+    });
+  });
+
+  closeBtn.addEventListener("click", () => overlay.classList.remove("open"));
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.remove("open");
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = $("#editorUsername").value.trim();
+    const password = $("#editorPassword").value;
+
+    if (
+      username === CONFIG.EDITOR_ACCOUNT.username &&
+      password === CONFIG.EDITOR_ACCOUNT.password
+    ) {
+      setEditorMode(true);
+      overlay.classList.remove("open");
+      updateEditorToggleUI();
+      showToast("Login berhasil, Mode Editor aktif");
+      renderMenuGrid();
+      renderPromoSection();
+    } else {
+      errorMsg.classList.add("show");
+    }
+  });
+}
+
+function updateEditorToggleUI() {
+  const loggedIn = isEditorMode();
+  const banner = $("#editorBanner");
+  banner.style.display = loggedIn ? "block" : "none";
+
+  const menuHint = $("#menuEditorHint");
+  if (menuHint) menuHint.style.display = loggedIn ? "block" : "none";
+
+  [$("#editorToggleBtn"), $("#editorToggleBtnMobile")].filter(Boolean).forEach((btn) => {
+    if (loggedIn) {
+      btn.textContent = "🔓 Logout Editor";
+      btn.classList.add("is-logged-in");
+    } else {
+      btn.textContent = "🔐 Login Editor";
+      btn.classList.remove("is-logged-in");
+    }
+  });
+}
+
+/* ============================================================
+   CATEGORY TABS: Food / Beverage / Menu Promo
+   ============================================================ */
+function initCategoryTabs() {
+  $$(".cat-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      $$(".cat-tab").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCategory = btn.dataset.category;
+      searchQuery = "";
+      $("#menuSearch").value = "";
+
+      const promoSection = $("#promoSection");
+      const menuSection = $("#menuGridSection");
+
+      if (activeCategory === "Menu Promo") {
+        promoSection.style.display = "";
+        menuSection.style.display = "none";
+        renderPromoSection();
+      } else {
+        promoSection.style.display = "none";
+        menuSection.style.display = "";
+        renderMenuGrid();
+      }
+    });
+  });
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+function initSearch() {
+  const input = $("#menuSearch");
+  if (!input) return;
+  input.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    if (searchQuery.trim()) {
+      $$(".cat-tab").forEach((b) => b.classList.remove("active"));
+      $("#promoSection").style.display = "none";
+      $("#menuGridSection").style.display = "";
+    }
+    renderMenuGrid();
+  });
+}
+
+/* ============================================================
+   MENU GRID
+   ============================================================ */
+function renderMenuGrid() {
+  const grid = $("#menuGrid");
+  const emptyState = $("#menuEmptyState");
+  const addBar = $("#addMenuBar");
+  if (!grid) return;
+
+  // Tampilkan bar "+ Tambah Menu" hanya untuk Editor yang sudah login,
+  // saat kategori Food/Beverage aktif & tidak sedang search
+  if (
+    isEditorMode() &&
+    !searchQuery.trim() &&
+    (activeCategory === "Food" || activeCategory === "Beverage")
+  ) {
+    addBar.style.display = "flex";
+    $("#addMenuLabel").textContent = `+ Tambah Menu ${activeCategory}`;
+  } else {
+    addBar.style.display = "none";
+  }
+
+  let items;
+  if (searchQuery.trim()) {
+    items = searchMenu(searchQuery);
+  } else {
+    items = getMenuByCategory(activeCategory);
+  }
+
+  if (items.length === 0) {
+    grid.innerHTML = "";
+    emptyState.style.display = "block";
+    return;
+  }
+  emptyState.style.display = "none";
+
+  const groups = [];
+  items.forEach((item) => {
+    let g = groups.find((x) => x.name === item.group);
+    if (!g) {
+      g = { name: item.group, items: [] };
+      groups.push(g);
+    }
+    g.items.push(item);
+  });
+
+  grid.innerHTML = groups
+    .map(
+      (g) => `
+    <div class="menu-group">
+      <h3 class="menu-group-title">${escapeHtml(g.name)}</h3>
+      <div class="product-grid">
+        ${g.items.map(renderProductCard).join("")}
+      </div>
+    </div>
+  `
+    )
+    .join("");
+
+  attachCardEvents();
+}
+
+function renderProductCard(item) {
+  const editor = isEditorMode();
+  const photoBlock = item.imageUrl
+    ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.name)}" class="product-photo" />`
+    : `<div class="product-photo-placeholder">
+         <span class="placeholder-icon">🍽️</span>
+       </div>`;
+
+  return `
+    <div class="product-card" data-id="${item.id}">
+      <div class="product-photo-wrap">
+        ${photoBlock}
+        ${item.featured ? '<span class="badge-featured">Best Seller</span>' : ""}
+        ${item.custom ? '<span class="badge-custom">Menu Baru</span>' : ""}
+        ${
+          editor
+            ? `<button class="photo-upload-btn" data-upload-id="${item.id}" title="${
+                item.imageUrl ? "Ganti foto" : "Tambah foto"
+              }">
+          📷 ${item.imageUrl ? "Ganti Foto" : "Tambah Foto"}
+        </button>
+        <input type="file" accept="image/*" class="photo-upload-input" data-input-id="${item.id}" hidden />`
+            : ""
+        }
+        ${
+          editor && item.custom
+            ? `<button class="card-delete-btn" data-delete-menu="${item.id}" title="Hapus menu ini">🗑</button>`
+            : ""
+        }
+      </div>
+      <div class="product-body">
+        <div class="product-no">${item.no ? "No. " + item.no : "Menu Tambahan"}</div>
+        <h4 class="product-name">${escapeHtml(item.name)}</h4>
+        <div class="product-footer">
+          <span class="price-badge">${formatRupiah(item.price)}</span>
+          <button class="add-btn" data-add-id="${item.id}" aria-label="Tambah ke keranjang">+</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function attachCardEvents() {
+  $$("[data-add-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = getMenuById(btn.dataset.addId);
+      if (!item) return;
+      cart.add(item, 1);
+      showToast(`${item.name} ditambahkan ke keranjang`);
+    });
+  });
+
+  $$("[data-upload-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const input = $(`[data-input-id="${btn.dataset.uploadId}"]`);
+      if (input) input.click();
+    });
+  });
+
+  $$(".photo-upload-input").forEach((input) => {
+    input.addEventListener("change", (e) => handlePhotoUpload(e, input.dataset.inputId));
+  });
+
+  $$("[data-delete-menu]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!isEditorMode()) return;
+      const item = getMenuById(btn.dataset.deleteMenu);
+      if (!item) return;
+      if (confirm(`Hapus menu "${item.name}"?`)) {
+        try {
+          await removeCustomMenu(btn.dataset.deleteMenu);
+          cart.remove(btn.dataset.deleteMenu);
+          showToast("Menu dihapus");
+        } catch (err) {
+          console.error(err);
+          showToast("Gagal menghapus menu, coba lagi");
+        }
+      }
+    });
+  });
+}
+
+async function handlePhotoUpload(e, id) {
+  if (!isEditorMode()) return;
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    showToast("File harus berupa gambar");
+    return;
+  }
+
+  showToast("Memproses & menyimpan foto...");
+  try {
+    const compressed = await compressImageForFirestore(file);
+    const item = getMenuById(id);
+    if (item && item.custom) {
+      // menu tambahan: update dokumennya langsung
+      await db.collection("customMenu").doc(id).update({ imageUrl: compressed });
+    } else {
+      // menu bawaan Excel: simpan di koleksi "photos"
+      await db.collection("photos").doc(id).set({ imageUrl: compressed });
+    }
+    showToast("Foto tersimpan & tayang untuk semua pengunjung");
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || "Gagal menyimpan foto, coba lagi");
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ============================================================
+   TAMBAH MENU (Food / Beverage) — modal + form
+   ============================================================ */
+let pendingMenuPhoto = "";
+
+function initAddMenuModal() {
+  const openBtn = $("#addMenuBtn");
+  const overlay = $("#addMenuOverlay");
+  const closeBtn = $("#addMenuClose");
+  const form = $("#addMenuForm");
+  const photoInput = $("#addMenuPhotoInput");
+  const photoPreview = $("#addMenuPhotoPreview");
+
+  if (!openBtn) return;
+
+  openBtn.addEventListener("click", () => {
+    if (!isEditorMode()) return;
+    pendingMenuPhoto = "";
+    form.reset();
+    photoPreview.innerHTML = `<span class="placeholder-icon">🍽️</span>`;
+    $("#addMenuCategoryLabel").textContent = activeCategory;
+    overlay.classList.add("open");
+  });
+  closeBtn.addEventListener("click", () => overlay.classList.remove("open"));
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.remove("open");
+  });
+
+  photoInput.addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("File harus berupa gambar");
+      return;
+    }
+    photoPreview.innerHTML = `<span class="placeholder-icon">⏳</span>`;
+    try {
+      pendingMenuPhoto = await compressImageForFirestore(file);
+      photoPreview.innerHTML = `<img src="${pendingMenuPhoto}" alt="preview" />`;
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || "Gagal memproses foto");
+      photoPreview.innerHTML = `<span class="placeholder-icon">🍽️</span>`;
+    }
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!isEditorMode()) return;
+    const name = $("#newMenuName").value.trim();
+    const group = $("#newMenuGroup").value.trim();
+    const price = $("#newMenuPrice").value;
+
+    if (!name || !price) {
+      showToast("Nama dan harga wajib diisi");
+      return;
+    }
+
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    showToast("Menyimpan menu...");
+    try {
+      await addCustomMenu({
+        name,
+        category: activeCategory,
+        group,
+        price,
+        imageUrl: pendingMenuPhoto,
+      });
+      overlay.classList.remove("open");
+      showToast("Menu baru ditambahkan & tayang untuk semua pengunjung");
+    } catch (err) {
+      console.error(err);
+      showToast("Gagal menyimpan menu, coba lagi");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+}
+
+/* ============================================================
+   MENU PROMO
+   ============================================================ */
+function renderPromoSection() {
+  const wrap = $("#promoContent");
+  if (!wrap) return;
+  const editor = isEditorMode();
+  const promos = getActivePromos();
+
+  const addBarHtml = editor
+    ? `
+    <div class="add-menu-bar" style="display:flex;">
+      <button class="btn btn-outline" id="addPromoBtn">+ Tambah Promo</button>
+    </div>
+  `
+    : "";
+
+  if (promos.length === 0) {
+    wrap.innerHTML = `
+      ${addBarHtml}
+      <div class="promo-empty">
+        <span class="big-icon">🎉</span>
+        <h3>Belum Ada Promo Aktif</h3>
+        <p>Pantau terus halaman ini — promo menarik dari Aroma Bumbu akan tampil di sini begitu tersedia.</p>
+      </div>
+    `;
+  } else {
+    wrap.innerHTML = `
+      ${addBarHtml}
+      <div class="product-grid">
+        ${promos
+          .map(
+            (p) => `
+          <div class="product-card">
+            <div class="product-photo-wrap">
+              ${
+                p.promoImage
+                  ? `<img src="${p.promoImage}" class="product-photo" alt="${escapeHtml(p.promoTitle)}" />`
+                  : `<div class="product-photo-placeholder"><span class="placeholder-icon">🎉</span></div>`
+              }
+              <span class="badge-featured">Promo</span>
+              ${
+                editor && p.custom
+                  ? `<button class="card-delete-btn" data-delete-promo="${p.id}" title="Hapus promo ini">🗑</button>`
+                  : ""
+              }
+            </div>
+            <div class="product-body">
+              <h4 class="product-name">${escapeHtml(p.promoTitle)}</h4>
+              <p class="promo-desc">${escapeHtml(p.promoDescription || "")}</p>
+              <div class="product-footer">
+                <span class="price-badge">${formatRupiah(p.promoPrice)}</span>
+                <button class="add-btn" data-add-promo-id="${p.id}">+</button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  if (editor) {
+    $("#addPromoBtn").addEventListener("click", openAddPromoModal);
+  }
+
+  $$("[data-delete-promo]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!isEditorMode()) return;
+      if (confirm("Hapus promo ini?")) {
+        try {
+          await removeCustomPromo(btn.dataset.deletePromo);
+          showToast("Promo dihapus");
+        } catch (err) {
+          console.error(err);
+          showToast("Gagal menghapus promo, coba lagi");
+        }
+      }
+    });
+  });
+
+  $$("[data-add-promo-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const promo = getActivePromos().find((p) => p.id === btn.dataset.addPromoId);
+      if (!promo) return;
+      cart.add(
+        {
+          id: promo.id,
+          name: promo.promoTitle,
+          price: promo.promoPrice,
+          imageUrl: promo.promoImage,
+        },
+        1
+      );
+      showToast(`${promo.promoTitle} ditambahkan ke keranjang`);
+    });
+  });
+}
+
+/* ============================================================
+   TAMBAH PROMO — modal + form
+   ============================================================ */
+let pendingPromoPhoto = "";
+
+function initAddPromoModal() {
+  const overlay = $("#addPromoOverlay");
+  const closeBtn = $("#addPromoClose");
+  const form = $("#addPromoForm");
+  const photoInput = $("#addPromoPhotoInput");
+  const photoPreview = $("#addPromoPhotoPreview");
+
+  closeBtn.addEventListener("click", () => overlay.classList.remove("open"));
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.remove("open");
+  });
+
+  photoInput.addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("File harus berupa gambar");
+      return;
+    }
+    photoPreview.innerHTML = `<span class="placeholder-icon">⏳</span>`;
+    try {
+      pendingPromoPhoto = await compressImageForFirestore(file);
+      photoPreview.innerHTML = `<img src="${pendingPromoPhoto}" alt="preview" />`;
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || "Gagal memproses foto");
+      photoPreview.innerHTML = `<span class="placeholder-icon">🎉</span>`;
+    }
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!isEditorMode()) return;
+    const promoTitle = $("#newPromoTitle").value.trim();
+    const promoDescription = $("#newPromoDesc").value.trim();
+    const promoPrice = $("#newPromoPrice").value;
+
+    if (!promoTitle || !promoPrice) {
+      showToast("Judul dan harga promo wajib diisi");
+      return;
+    }
+
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    showToast("Menyimpan promo...");
+    try {
+      await addCustomPromo({
+        promoTitle,
+        promoDescription,
+        promoPrice,
+        promoImage: pendingPromoPhoto,
+      });
+      overlay.classList.remove("open");
+      showToast("Promo baru ditambahkan & tayang untuk semua pengunjung");
+    } catch (err) {
+      console.error(err);
+      showToast("Gagal menyimpan promo, coba lagi");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+}
+
+function openAddPromoModal() {
+  pendingPromoPhoto = "";
+  $("#addPromoForm").reset();
+  $("#addPromoPhotoPreview").innerHTML = `<span class="placeholder-icon">🎉</span>`;
+  $("#addPromoOverlay").classList.add("open");
+}
+
+/* ============================================================
+   CART DRAWER
+   ============================================================ */
+function initCartUI() {
+  $("#cartFab").addEventListener("click", openCart);
+  $("#cartClose").addEventListener("click", closeCart);
+  $("#cartOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "cartOverlay") closeCart();
+  });
+  $("#checkoutBtn").addEventListener("click", () => {
+    closeCart();
+    openCheckoutModal();
+  });
+}
+
+function openCart() {
+  $("#cartOverlay").classList.add("open");
+  $("#cartDrawer").style.right = "0";
+}
+function closeCart() {
+  $("#cartOverlay").classList.remove("open");
+  $("#cartDrawer").style.right = "-420px";
+}
+
+function renderCartUI(items) {
+  const body = $("#cartBody");
+  const countBadge = $("#cartCount");
+  const subtotalEl = $("#cartSubtotal");
+  const checkoutBtn = $("#checkoutBtn");
+
+  const totalItems = cart.totalItems();
+  countBadge.textContent = totalItems;
+  countBadge.style.display = totalItems > 0 ? "inline-block" : "none";
+
+  if (items.length === 0) {
+    body.innerHTML = `
+      <div class="empty-cart">
+        <div class="big-icon">🛒</div>
+        <p>Keranjang kamu masih kosong.<br/>Yuk pilih menu favoritmu!</p>
+      </div>
+    `;
+    checkoutBtn.disabled = true;
+  } else {
+    body.innerHTML = items
+      .map(
+        (item) => `
+      <div class="cart-item" data-id="${item.id}">
+        ${
+          item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.name)}" />`
+            : `<div class="cart-item-photo-placeholder">🍽️</div>`
+        }
+        <div class="cart-item-info">
+          <div class="cart-item-name">${escapeHtml(item.name)}</div>
+          <div class="cart-item-price">${formatRupiah(item.price)}</div>
+          <div class="cart-item-qty">
+            <button data-dec="${item.id}">−</button>
+            <span>${item.qty}</span>
+            <button data-inc="${item.id}">+</button>
+          </div>
+        </div>
+        <button class="cart-item-remove" data-remove="${item.id}">Hapus</button>
+      </div>
+    `
+      )
+      .join("");
+    checkoutBtn.disabled = false;
+  }
+
+  subtotalEl.textContent = formatRupiah(cart.totalPrice());
+
+  $$("[data-inc]").forEach((b) => b.addEventListener("click", () => cart.increment(b.dataset.inc)));
+  $$("[data-dec]").forEach((b) => b.addEventListener("click", () => cart.decrement(b.dataset.dec)));
+  $$("[data-remove]").forEach((b) => b.addEventListener("click", () => cart.remove(b.dataset.remove)));
+}
+
+/* ============================================================
+   CHECKOUT + WHATSAPP
+   ============================================================ */
+function initCheckout() {
+  $("#checkoutClose").addEventListener("click", closeCheckoutModal);
+  $("#checkoutOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "checkoutOverlay") closeCheckoutModal();
+  });
+  $("#checkoutForm").addEventListener("submit", handleCheckoutSubmit);
+}
+
+function openCheckoutModal() {
+  if (cart.items.length === 0) return;
+  renderOrderSummary();
+  $("#checkoutOverlay").classList.add("open");
+}
+function closeCheckoutModal() {
+  $("#checkoutOverlay").classList.remove("open");
+}
+
+function renderOrderSummary() {
+  const wrap = $("#orderSummary");
+  wrap.innerHTML = `
+    <h4>Ringkasan Pesanan</h4>
+    ${cart.items
+      .map(
+        (i) => `
+      <div class="order-line">
+        <span>${escapeHtml(i.name)} x${i.qty}</span>
+        <span>${formatRupiah(i.price * i.qty)}</span>
+      </div>
+    `
+      )
+      .join("")}
+    <div class="order-total">
+      <span>Total</span>
+      <span>${formatRupiah(cart.totalPrice())}</span>
+    </div>
+  `;
+}
+
+function handleCheckoutSubmit(e) {
+  e.preventDefault();
+  const nameInput = $("#customerName");
+  const phoneInput = $("#customerPhone");
+  const notesInput = $("#customerNotes");
+
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const notes = notesInput.value.trim();
+
+  let valid = true;
+  if (!name) {
+    $("#nameError").classList.add("show");
+    valid = false;
+  } else {
+    $("#nameError").classList.remove("show");
+  }
+  if (!valid) return;
+
+  const message = buildWaMessage(name, phone, notes);
+  const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+
+  cart.clear();
+  closeCheckoutModal();
+  nameInput.value = "";
+  phoneInput.value = "";
+  notesInput.value = "";
+  showToast("Pesanan dikirim ke WhatsApp!");
+}
+
+function buildWaMessage(name, phone, notes) {
+  const lines = cart.items.map(
+    (i, idx) => `${idx + 1}. ${i.name} x ${i.qty} — ${formatRupiah(i.price * i.qty)}`
+  );
+  let msg = `Halo Aroma Bumbu, saya ingin memesan:\n\n`;
+  msg += lines.join("\n");
+  msg += `\n\nTotal: ${formatRupiah(cart.totalPrice())}`;
+  msg += `\n\nNama: ${name}`;
+  if (phone) msg += `\nNo. WhatsApp: ${phone}`;
+  msg += `\nCatatan: ${notes || "-"}`;
+  msg += `\n\nMohon konfirmasi pesanan saya.\nTerima kasih.`;
+  return msg;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(text) {
+  const toast = $("#toast");
+  toast.textContent = text;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+</script>
+</body>
+</html>
